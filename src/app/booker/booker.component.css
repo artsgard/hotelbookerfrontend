@@ -1,0 +1,30 @@
+.booker-check {
+    padding-left: 15px;
+    margin-top: 15px;
+}
+
+.hotel-title {
+    padding-top: 50px;
+    font-size: 32px;
+}
+
+.booker-check label {
+    padding-left: 10px;
+}
+
+.booker-panel {
+    margin-bottom: 50px;
+    background-color: #FFF5EB;
+    border-left: 6px solid #FFD1A4;
+}
+
+.booker-panel-text {
+    padding: 20px;
+    font-size: 16px;
+}
+
+button {
+    margin-right: 20px;
+}
+
+

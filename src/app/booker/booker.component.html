@@ -1,0 +1,122 @@
+<div class="container">
+
+    <div *ngFor="let hotel of hotels" class="inner-container pt-4">
+        <div class="row p-4">
+            <div class="col-4 hotel-title">
+                {{hotel.name}}
+            </div>
+            <div class="col-8">
+                <div class="booker-panel">
+                    <div class="booker-panel-text">
+                        {{hotel.description}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row p-4">
+            <div class="col-8">
+                <img [src]="hotel.hotelMedias[0].link" alt="hotel-city" width="500" height=500>
+            </div>
+            <div class="col-4">
+                <div class="booker-panel">
+                    <div class="booker-panel-text">
+                        <div>{{hotel.city}}</div>
+                        <div>{{hotel.street}}</div>
+                        <div>phone: {{hotel.phone}}</div>
+                        <div>email: {{hotel.email}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row p-4">
+            <div class="col-4">
+                <div class="booker-panel">
+                    <div class="booker-panel-text">
+                        <div>Single room: {{hotel.singleRoom}}</div>
+                        <div>Double room: {{hotel.doubleRoom}}</div>
+                        <div>Triple room: {{hotel.tripleRoom}}</div>
+                        <div>Breakfast Included: {{hotel.breakfastIncluded}}</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-2"></div>
+
+            <div class="col-6 mt-4">
+                <form #bookerForm='ngForm' class="form-horizontal">
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="control-label" for="roomType">Room Type</label>
+                            <select id="roomType" #roomType="ngModel" name="roomType" [(ngModel)]="booker.roomType"
+                                class="form-control" required>
+                                <option *ngFor="let roomType of roomTypes; let i = index" [ngValue]="roomType"
+                                    [selected]="i == 0">
+                                    {{roomType}}
+                                </option>
+                            </select>
+                            <div *ngIf="roomType.invalid && (roomType.dirty || roomType.touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="roomType.errors.required">
+                                    Room Type is required.
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-6 pt-4 booker-check">
+                            <input id="breakfastIncluded" [(ngModel)]="booker.breakfastIncluded" type="checkbox"
+                                name="breakfastIncluded">
+                            <label class="" for="breakfastIncluded">Breakfast Included?</label>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <label class="control-label" for="checkInDate">Check in date</label>
+                            <input id="checkInDate" matInput #datepicker1="ngModel" [matDatepicker]="checkInDate"
+                                placeholder="Choose a checkin date"
+                                [(ngModel)]="booker.checkInDate" name="datepicker1" class="form-control" required>
+                            <div>
+                                <mat-datepicker-toggle matSuffix [for]="checkInDate"></mat-datepicker-toggle>
+                                <mat-datepicker #checkInDate></mat-datepicker>
+                            </div>
+                            <div *ngIf="datepicker1.invalid && (datepicker1.dirty || datepicker1.touched)" class="alert alert-danger">
+                                <div *ngIf="datepicker1.errors.required">
+                                    Check in date is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="control-label" for="checkOutDate">Check out date</label>
+                            <input id="checkOutDate" matInput #datepicker2="ngModel" [matDatepicker]="checkOutDate"
+                                placeholder="Choose a checkout date"
+                                [(ngModel)]="booker.checkOutDate" name="datepicker2" class="form-control" required>
+                            <div>
+                                <mat-datepicker-toggle matSuffix [for]="checkOutDate"></mat-datepicker-toggle>
+                                <mat-datepicker #checkOutDate></mat-datepicker>
+                            </div>
+                            <div *ngIf="datepicker2.invalid && (datepicker2.dirty || datepicker2.touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="datepicker2.errors.required">
+                                    Check out date is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row booker-button">
+                        <div class="col-6"></div>
+
+                        <div class="col-6 mt-4">
+                            <button type="button" (click)="onSubmit(hotel)" [disabled]="bookerForm.invalid" class="btn btn-success">
+                                Submit
+                            </button>
+                            <button type="button" (click)="hotelPanel()" class="btn btn-success">
+                                Hotel Panel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

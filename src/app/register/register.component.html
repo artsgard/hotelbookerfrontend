@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="container-panel">
+        <form #clientForm='ngForm' class="form-horizontal">
+            <div class="row pt-4 mb-4">
+                <div class="form-group col-6">
+                    <label class="control-label" for="username">User Name</label>
+                    <input id="username" #username="ngModel" [(ngModel)]="client.username"
+                        class="form-control" name="username" required>
+                    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+                        <div *ngIf="username.errors.required">
+                            User Name is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="email">Email</label>
+
+                    <input id="email" #email="ngModel" [(ngModel)]="client.email"
+                        class="form-control" name="email" required email>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                        <div *ngIf="email.errors.required">
+                            Email is required.
+                        </div>
+                        <div *ngIf="email.errors.email">
+                            Not a correct email format
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row pt-4 mb-4">
+                <div class="form-group col-6">
+                    <label class="control-label" for="firstName">First Name</label>
+
+                    <input id="firstName" #firstName="ngModel" [(ngModel)]="client.firstName"
+                        class="form-control" name="firstName">
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="lastName">Last Name</label>
+
+                    <input id="firstNlastNameame" #firstName="ngModel" [(ngModel)]="client.lastName"
+                        class="form-control" name="lastName">
+                </div>
+            </div>
+            <div class="row pt-4 mb-4">
+                <div class="form-group col-6">
+                    <label class="control-label" for="email">Password</label>
+
+                    <input id="password" #password="ngModel" [(ngModel)]="client.password"
+                        class="form-control" name="password" required password>
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                        <div *ngIf="password.errors.required">
+                            Password is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <div class="button-panel pt-4 mb-4">
+                        <button type="button" (click)="onSubmit()" class="btn btn-success"
+                            [disabled]="clientForm.invalid">
+                            {{client.id == null ? 'Submit' : 'Update'}}
+                        </button>
+                        <button type="button" (click)="back()" class="btn btn-warning" [disabled]="false">
+                            Chancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
