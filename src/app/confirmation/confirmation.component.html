@@ -15,7 +15,7 @@
                 <li>your checkout date: <span>{{booker.checkOutDate | date}}</span></li>
                 <li>your roomtype: <span>{{booker.roomType}}</span></li>
                 <li>breakfast included: <span>{{booker.breakfastIncluded ? 'yes' : 'no'}}</span></li>
-                <li>total: <span>{{booker.finalPrice}}</span></li>
+                <li>total: <span>{{booker.finalPrice | currency}}</span></li>
             </ul>
         </div>
     </div>

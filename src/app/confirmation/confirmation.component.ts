@@ -19,14 +19,6 @@ export class ConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.booker = this.bookerService.getCurrentBooker();
-    if (this.booker != undefined) {
-      alert("booker infoat confirm\n" + this.booker.nights + "\n" + this.booker.checkInDate + "\n" +
-        this.booker.checkOutDate + "\n" +
-        this.booker.breakfastIncluded + "\n" +
-        this.booker.roomType + "\n" +
-        this.booker.hotel.name + "\n" +
-        this.booker.finalPrice);
-    }
   }
 
 }

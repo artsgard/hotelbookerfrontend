@@ -15,6 +15,7 @@
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Single</th>
+                        <th>Double</th>
                         <th>Triple</th>
                         <th>Breakfast</th>
                         <th>Photos etc</th>
@@ -29,9 +30,10 @@
                         <td><span>{{hotel.street}}</span></td>
                         <td><span>{{hotel.phone}}</span></td>
                         <td><span>{{hotel.email}}</span></td>
-                        <td><span>{{hotel.singleRoom}}</span></td>
-                        <td><span>{{hotel.doubleRoom}}</span></td>
-                        <td><span>{{hotel.tripleRoom}}</span></td>
+                        <td><span>{{hotel.singleRoom | currency}}</span></td>
+                        <td><span>{{hotel.doubleRoom | currency}}</span></td>
+                        <td><span>{{hotel.tripleRoom | currency}}</span></td>
+                        <td><span>{{hotel.breakfastIncluded | currency}}</span></td>
                         <td><span><button type="button" (click)="onMedia()" [disabled]="hotel !== selectedHotel"
                                     class="btn-sm btn-success">Media</button></span></td>
                     </tr>
