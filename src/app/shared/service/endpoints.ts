@@ -1,4 +1,4 @@
-const urlBase = 'http://localhost:8086/'
+const urlBase = 'http://localhost:8085/'
 
 export const endpoints = {
     clientUrl: urlBase + 'client',

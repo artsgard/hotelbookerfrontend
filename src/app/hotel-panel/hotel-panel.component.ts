@@ -31,7 +31,7 @@ export class HotelPanelComponent implements OnInit {
     this.selectedHotel = new Hotel();
     this.getHotels();
     this.showHiddenButtons = false;
-    this.showMediaButton= false;
+    this.showMediaButton = false;
     this.showMedia = false;
     this.showForm = false;
     this.modalService.registerModal("delete-hotel-modal");
@@ -41,40 +41,36 @@ export class HotelPanelComponent implements OnInit {
   public onHotelSelect(hotel: Hotel): void {
     this.selectedHotel = hotel;
     this.showHiddenButtons = true;
-    this.showMediaButton= false;
+    this.showMediaButton = false;
     this.showForm = true;
   }
 
   public onAddNewHotel(): void {
-    this.selectedHotel = new Hotel(); 
-    this.showMediaButton= true;
+    this.selectedHotel = new Hotel();
+    this.showMediaButton = true;
     this.showHiddenButtons = false;
     this.showForm = true;
   }
 
   public onMedia(): void {
     this.hotelMedias = this.selectedHotel.hotelMedias;
-    /*
-    if (this.hotelMedias === undefined) {
-      this.hotelMedias = [];
-    }
-    */
     this.showMedia = true;
   }
 
   public onSubmit(): void {
-    alert(JSON.stringify(this.selectedHotel));
-    if (this.selectedHotel.hotelMedias.length === 0 ) {
+    if (this.selectedHotel.hotelMedias.length === 0) {
       this.modalService.open("add-media-modal")
     } else {
-     this.hotelService.saveHotel(this.selectedHotel).subscribe(hotels => {
-      alert("\n\nat Hotel saveHotel() " + JSON.stringify(hotels))
-    });
+      this.hotelService.saveHotel(this.selectedHotel).subscribe(hotel => {
+        console.log("\n\nat Hotel saveHotel() " + JSON.stringify(hotel))
+        this.hotels.push(hotel);
+        this.selectedHotel = new Hotel();
+      });
+  
     }
   }
 
   public onDelete(): void {
-    alert('delete')
     this.modalService.open("delete-hotel-modal")
   }
 
@@ -82,42 +78,29 @@ export class HotelPanelComponent implements OnInit {
     if (id === "delete-hotel-modal") {
       const delId: number = this.selectedHotel.id;
       let index: number = -1;
+      index = this.hotels.indexOf(this.selectedHotel);
 
-      if (this.hotels !== undefined && this.hotels !== null) {
-        index = this.hotels.indexOf(this.selectedHotel);
-      }
-
-      if (delId !== null) {
-        this.hotelService.deleteHotelById(delId).subscribe(responce => {
-          console.log("\n\nat hotel-panel onDelete(): " + JSON.stringify(responce));
-          this.hotels.splice(index, 1)
-          this.showHiddenButtons = false;
-        });
-      } else {
-        this.hotels.splice(index, 1);
+      this.hotelService.deleteHotelById(delId).subscribe(responce => {
+        console.log("\n\nat hotel-panel onDelete()");
+        this.hotels.splice(index, 1)
         this.showHiddenButtons = false;
-      }
+        this.selectedHotel = new Hotel();
+      });
+      
     }
   }
 
   public onGoBack(): void {
-    //this.router.navigate(['booker']);
-    this.modalService.open("delete-hotel-modal")
+    this.router.navigate(['booker']);
+    this.selectedHotel = new Hotel();
   }
 
-  public hotelMediaBackToHotel(medias: HotelMedia[]): void {
-    this.showMedia = false;
-    const that = this;
-    medias.forEach(function (value) {
-      that.selectedHotel.hotelMedias.push(value);
-    }); 
-  }
 
-  public backToHotelEmpty(): void {
+  public backToHotelFromMedia(): void {
     this.showMedia = false;
   }
 
-  private getHotels(): void { // not in use
+  private getHotels(): void {
     this.hotelService.getAllHotels()
       .subscribe(hotels => {
         console.log("\n\nat Hotel getAllHotels() " + JSON.stringify(hotels))

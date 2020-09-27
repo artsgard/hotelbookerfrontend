@@ -14,10 +14,9 @@ import { SimpleModalService } from '../shared/service/simple-modal.service';
   styleUrls: ['./media-panel.component.css']
 })
 export class MediaPanelComponent implements OnInit {
-  
+
   @Input() hotelMedias: HotelMedia[];
-  @Output() hotelMediaBackToHotel: EventEmitter<HotelMedia[]> = new EventEmitter();
-  @Output() backToHotelEmpty: EventEmitter<any> = new EventEmitter();
+  @Output() backToHotel: EventEmitter<any> = new EventEmitter();
   public showHiddenButtons: boolean;
   public showForm: boolean;
   public showMedia: boolean;
@@ -41,13 +40,17 @@ export class MediaPanelComponent implements OnInit {
   }
 
   public onAddNewMedia(): void {
-    this.selectedMedia = new HotelMedia();  
+    this.selectedMedia = new HotelMedia();
     this.showForm = true;
   }
 
   public onSubmit(): void {
-    this.hotelMedias.push( this.selectedMedia);
-    this.hotelMediaBackToHotel.emit(this.hotelMedias);
+    const ind: number = this.hotelMedias.indexOf(this.selectedMedia);
+    if (ind !== -1) {
+      this.hotelMedias.splice(ind, 1);
+    }
+    this.hotelMedias.push(this.selectedMedia);
+    this.backToHotel.emit();
   }
 
   public onDelete(): void {
@@ -55,17 +58,15 @@ export class MediaPanelComponent implements OnInit {
   }
 
   public onGoBack(): void {
-    this.backToHotelEmpty.emit();
+    this.selectedMedia = new HotelMedia();
+    this.backToHotel.emit();
   }
 
   public okModal(id: string): void {
-    if (id === "delete-Media-modal") {
+    if (id === "delete-media-modal") {
       const delId: number = this.selectedMedia.id;
       let index: number = -1;
-      
-      if (this.hotelMedias !== undefined && this.hotelMedias !== null) {
-        index = this.hotelMedias.indexOf(this.selectedMedia);
-      }
+      index = this.hotelMedias.indexOf(this.selectedMedia);
 
       if (delId !== null) {
         this.hotelMediaService.deleteHotelMediaById(delId).subscribe(responce => {
