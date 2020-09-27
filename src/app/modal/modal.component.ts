@@ -9,9 +9,8 @@ import { SimpleModalService } from '../shared/service/simple-modal.service';
               <div class="modal-title">{{modalTitle}}</div>
               <div class="modal-text">{{modalText}}</div>
               <div class="modal-buttons">
-                <button *ngIf="!isInfoModal" type="button"  (click)="closeModal()" class="btn-sm btn-danger" [disabled]="false">Yes</button>
-                <button *ngIf="!isInfoModal" type="button"  (click)="closeModal()" class="btn-sm btn-success" [disabled]="false">Close</button>
-                <button *ngIf="!isInfoModal" type="button"  (click)="closeModal()" class="btn-sm btn-warning" [disabled]="false">Chancel</button>
+                <button *ngIf="!isInfoModal" type="button"  (click)="sendOkModal()" class="btn-sm btn-danger" [disabled]="false">Yes</button>
+                <button type="button"  (click)="closeModal()" class="btn-sm btn-success" [disabled]="false">Close</button>
                 </div>
           </div>
       </div>

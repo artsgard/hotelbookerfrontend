@@ -35,6 +35,7 @@ import { MediaPanelComponent } from './media-panel/media-panel.component';
     ConfirmationComponent,
     HotelPanelComponent,
     ModalComponent,
+    ModalComponent,
     MediaPanelComponent
   ],
   imports: [

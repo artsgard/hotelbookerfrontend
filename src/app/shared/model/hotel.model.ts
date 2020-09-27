@@ -12,5 +12,5 @@ export class Hotel {
     doubleRoom : number;
     tripleRoom : number;
     breakfastIncluded : number;
-    hotelMedias: HotelMedia[];
+    hotelMedias: Array<HotelMedia> = [];
 }

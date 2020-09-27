@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HotelMedia } from '../shared/model/hotel-media.model';
 import { Hotel } from '../shared/model/hotel.model';
 import { IBookerService } from '../shared/service/i.booker.service';
 import { IClientService } from '../shared/service/i.client.service';
@@ -14,9 +15,12 @@ import { SimpleModalService } from '../shared/service/simple-modal.service';
 })
 export class HotelPanelComponent implements OnInit {
 
-  public hotels: Hotel[];
   public showHiddenButtons: boolean;
+  public showMediaButton: boolean;
   public showMedia: boolean;
+  public showForm: boolean;
+  public hotels: Hotel[];
+  public hotelMedias: HotelMedia[];
   public hotel: Hotel;
   public selectedHotel: Hotel;
 
@@ -27,19 +31,50 @@ export class HotelPanelComponent implements OnInit {
     this.selectedHotel = new Hotel();
     this.getHotels();
     this.showHiddenButtons = false;
+    this.showMediaButton= false;
     this.showMedia = false;
+    this.showForm = false;
     this.modalService.registerModal("delete-hotel-modal");
+    this.modalService.registerModal("add-media-modal");
+  }
+
+  public onHotelSelect(hotel: Hotel): void {
+    this.selectedHotel = hotel;
+    this.showHiddenButtons = true;
+    this.showMediaButton= false;
+    this.showForm = true;
   }
 
   public onAddNewHotel(): void {
-    this.selectedHotel = new Hotel();
+    this.selectedHotel = new Hotel(); 
+    this.showMediaButton= true;
+    this.showHiddenButtons = false;
+    this.showForm = true;
+  }
+
+  public onMedia(): void {
+    this.hotelMedias = this.selectedHotel.hotelMedias;
+    /*
+    if (this.hotelMedias === undefined) {
+      this.hotelMedias = [];
+    }
+    */
+    this.showMedia = true;
   }
 
   public onSubmit(): void {
-    alert('onSubmit')
+    alert(JSON.stringify(this.selectedHotel));
+    if (this.selectedHotel.hotelMedias.length === 0 ) {
+      this.modalService.open("add-media-modal")
+    } else {
+     this.hotelService.saveHotel(this.selectedHotel).subscribe(hotels => {
+      alert("\n\nat Hotel saveHotel() " + JSON.stringify(hotels))
+    });
+    }
   }
 
   public onDelete(): void {
+    alert('delete')
     this.modalService.open("delete-hotel-modal")
   }
 
@@ -65,21 +100,17 @@ export class HotelPanelComponent implements OnInit {
     }
   }
 
-  public onMedia(): void {
-    this.showMedia = true;
-  }
-
   public onGoBack(): void {
-    this.router.navigate(['booker']);
+    //this.router.navigate(['booker']);
+    this.modalService.open("delete-hotel-modal")
   }
 
-  public onHotelSelect(hotel: Hotel): void {
-    this.selectedHotel = hotel;
-    this.showHiddenButtons = true;
-  }
-
-  public hotelMediaBackToHotel(hotel: Hotel): void {
-    alert(hotel);
+  public hotelMediaBackToHotel(medias: HotelMedia[]): void {
+    this.showMedia = false;
+    const that = this;
+    medias.forEach(function (value) {
+      that.selectedHotel.hotelMedias.push(value);
+    }); 
   }
 
   public backToHotelEmpty(): void {

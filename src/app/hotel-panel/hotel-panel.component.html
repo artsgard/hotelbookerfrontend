@@ -1,6 +1,4 @@
-<app-media-panel *ngIf="showMedia" 
-    [selectedHotel]="selectedHotel" 
-    (hotelMediaBackToHotel)="hotelMediaBackToHotel($event)"
+<app-media-panel *ngIf="showMedia" [hotelMedias]="hotelMedias" (hotelMediaBackToHotel)="hotelMediaBackToHotel($event)"
     (backToHotelEmpty)="backToHotelEmpty()">
 </app-media-panel>
 
@@ -35,7 +33,7 @@
                         <td><span>{{hotel.singleRoom}}</span></td>
                         <td><span>{{hotel.doubleRoom}}</span></td>
                         <td><span>{{hotel.tripleRoom}}</span></td>
-                        <td><span><button type="button" (click)="onMedia()" [disabled]="hotel === selectedHotel" 
+                        <td><span><button type="button" (click)="onMedia()" [disabled]="hotel !== selectedHotel"
                                     class="btn-sm btn-success">Media</button></span></td>
                     </tr>
                 </tbody>
@@ -43,114 +41,119 @@
         </div>
     </div>
 
+
     <form #hotelForm='ngForm' class="form-horizontal">
-        <div class="row mb-4">
-            <div class="form-group col-3">
-                <label class="control-label" for="name">Hotel Name</label>
-                <input id="name" #name="ngModel" [(ngModel)]="selectedHotel.name" class="form-control" name="name"
-                    required>
-                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-                    <div *ngIf="name.errors.required">
-                        Hotel Name is required.
-                    </div>
-                </div>
-            </div>
-            <div class="form-group col-3">
-                <label class="control-label" for="city">Hotel City</label>
-                <input id="city" #city="ngModel" [(ngModel)]="selectedHotel.city" class="form-control" name="city"
-                    required>
-                <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger">
-                    <div *ngIf="city.errors.required">
-                        Hotel City is required.
-                    </div>
-                </div>
-            </div>
-            <div class="form-group col-3">
-                <label class="control-label" for="street">Hotel Street</label>
-                <input id="street" #street="ngModel" [(ngModel)]="selectedHotel.street" class="form-control"
-                    name="street" required>
-                <div *ngIf="street.invalid && (street.dirty || street.touched)" class="alert alert-danger">
-                    <div *ngIf="street.errors.required">
-                        Hotel Street is required.
-                    </div>
-                </div>
-            </div>
-            <div class="form-group col-3">
-                <label class="control-label" for="phone">Hotel Phone Number</label>
-                <input id="phone" #phone="ngModel" [(ngModel)]="selectedHotel.phone" class="form-control" name="phone"
-                    required>
-                <div type="curency" *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-danger">
-                    <div *ngIf="phone.errors.required">
-                        Hotel phone number is required.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mb-4">
-            <div class="form-group col-3">
-                <label class="control-label" for="email">Hotel Email</label>
-                <input id="email" #email="ngModel" [(ngModel)]="selectedHotel.email" class="form-control" name="email"
-                    required email>
-                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
-                    <div *ngIf="email.errors.required">
-                        Email is required.
-                    </div>
-                    <div *ngIf="email.errors.email">
-                        Not a correct email format
-                    </div>
-                </div>
-            </div>
-            <div class="form-group col-6">
-                <label class="control-label" for="email">Hotel Description</label>
-                <textarea id="description" #description="ngModel" [(ngModel)]="selectedHotel.description"
-                    class="textArea" name="description" rows="6" cols="70" class="form-control"></textarea>
-                <div *ngIf="description.invalid && (description.dirty || description.touched)"
-                    class="alert alert-danger">
-                    <div *ngIf="email.errors.required">
-                        Description is required.
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group col-3 money-fields">
-                <label class="control-label" for="breakfastIncluded">Hotel Breakfast Included</label>
-                <input type="number" min="0.00" max="1000.00" step="1" id="breakfastIncluded"
-                    #breakfastIncluded="ngModel" [(ngModel)]="selectedHotel.breakfastIncluded" class="form-controlx"
-                    name="breakfastIncluded" required>
-                <div *ngIf="breakfastIncluded.invalid && (breakfastIncluded.dirty || breakfastIncluded.touched)"
-                    class="alert alert-danger">
-                    <div *ngIf="breakfastIncluded.errors.required">
-                        Hotel Breakfast Included is required.
-                    </div>
-                </div>
-                <label class="control-label" for="singleRoom">Hotel Single Room</label>
-                <input type="number" min="0.00" max="1000.00" step="1" id="singleRoom" #singleRoom="ngModel"
-                    [(ngModel)]="selectedHotel.singleRoom" class="form-controlx" name="singleRoom" required>
-                <div *ngIf="singleRoom.invalid && (singleRoom.dirty || singleRoom.touched)" class="alert alert-danger">
-                    <div *ngIf="singleRoom.errors.required">
-                        Hotel Single Room price is required.
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label" for="doubleRoom">Hotel Double Room</label>
-                    <input type="number" min="0.00" max="1000.00" step="1" id="doubleRoom" #doubleRoom="ngModel"
-                        [(ngModel)]="selectedHotel.doubleRoom" class="form-controlx" name="doubleRoom" required>
-                    <div *ngIf="doubleRoom.invalid && (doubleRoom.dirty || doubleRoom.touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="doubleRoom.errors.required">
-                            Hotel Double Room price is required.
+        <div *ngIf="showForm">
+            <div class="row mb-4">
+                <div class="form-group col-3">
+                    <label class="control-label" for="name">Hotel Name</label>
+                    <input id="name" #name="ngModel" [(ngModel)]="selectedHotel.name" class="form-control" name="name"
+                        required>
+                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                        <div *ngIf="name.errors.required">
+                            Hotel Name is required.
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="tripleRoom">Hotel Triple Room</label>
-                    <input type="number" min="0.00" max="1000.00" step="1" id="tripleRoom" #tripleRoom="ngModel"
-                        [(ngModel)]="selectedHotel.tripleRoom" class="form-controlx" name="tripleRoom" required>
-                    <div *ngIf="tripleRoom.invalid && (tripleRoom.dirty || tripleRoom.touched)"
+                <div class="form-group col-3">
+                    <label class="control-label" for="city">Hotel City</label>
+                    <input id="city" #city="ngModel" [(ngModel)]="selectedHotel.city" class="form-control" name="city"
+                        required>
+                    <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger">
+                        <div *ngIf="city.errors.required">
+                            Hotel City is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-3">
+                    <label class="control-label" for="street">Hotel Street</label>
+                    <input id="street" #street="ngModel" [(ngModel)]="selectedHotel.street" class="form-control"
+                        name="street" required>
+                    <div *ngIf="street.invalid && (street.dirty || street.touched)" class="alert alert-danger">
+                        <div *ngIf="street.errors.required">
+                            Hotel Street is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-3">
+                    <label class="control-label" for="phone">Hotel Phone Number</label>
+                    <input id="phone" type="number" #phone="ngModel" [(ngModel)]="selectedHotel.phone" class="form-control"
+                        name="phone" required>
+                    <div type="curency" *ngIf="phone.invalid && (phone.dirty || phone.touched)"
                         class="alert alert-danger">
-                        <div *ngIf="tripleRoom.errors.required">
-                            Hotel Triple Room price is required.
+                        <div *ngIf="phone.errors.required">
+                            Hotel phone number is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="form-group col-3">
+                    <label class="control-label" for="email">Hotel Email</label>
+                    <input id="email" #email="ngModel" [(ngModel)]="selectedHotel.email" class="form-control"
+                        name="email" required email>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                        <div *ngIf="email.errors.required">
+                            Email is required.
+                        </div>
+                        <div *ngIf="email.errors.email">
+                            Not a correct email format
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label" for="description">Hotel Description</label>
+                    <textarea id="description" #description="ngModel" [(ngModel)]="selectedHotel.description"
+                        name="description" rows="6" cols="70" class="form-control" required></textarea>
+                    <div *ngIf="description.invalid && (description.dirty || description.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="description.errors.required">
+                            Description is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-3 money-fields">
+                    <label class="control-label" for="breakfastIncluded">Hotel Breakfast Included</label>
+                    <input type="number" min="0.00" max="1000.00" step="1" id="breakfastIncluded"
+                        #breakfastIncluded="ngModel" [(ngModel)]="selectedHotel.breakfastIncluded" class="form-controlx"
+                        name="breakfastIncluded" required>
+                    <div *ngIf="breakfastIncluded.invalid && (breakfastIncluded.dirty || breakfastIncluded.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="breakfastIncluded.errors.required">
+                            Hotel Breakfast Included is required.
+                        </div>
+                    </div>
+                    <label class="control-label" for="singleRoom">Hotel Single Room</label>
+                    <input type="number" min="0.00" max="1000.00" step="1" id="singleRoom" #singleRoom="ngModel"
+                        [(ngModel)]="selectedHotel.singleRoom" class="form-controlx" name="singleRoom" required>
+                    <div *ngIf="singleRoom.invalid && (singleRoom.dirty || singleRoom.touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="singleRoom.errors.required">
+                            Hotel Single Room price is required.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="doubleRoom">Hotel Double Room</label>
+                        <input type="number" min="0.00" max="1000.00" step="1" id="doubleRoom" #doubleRoom="ngModel"
+                            [(ngModel)]="selectedHotel.doubleRoom" class="form-controlx" name="doubleRoom" required>
+                        <div *ngIf="doubleRoom.invalid && (doubleRoom.dirty || doubleRoom.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="doubleRoom.errors.required">
+                                Hotel Double Room price is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="tripleRoom">Hotel Triple Room</label>
+                        <input type="number" min="0.00" max="1000.00" step="1" id="tripleRoom" #tripleRoom="ngModel"
+                            [(ngModel)]="selectedHotel.tripleRoom" class="form-controlx" name="tripleRoom" required>
+                        <div *ngIf="tripleRoom.invalid && (tripleRoom.dirty || tripleRoom.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="tripleRoom.errors.required">
+                                Hotel Triple Room price is required.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,16 +161,25 @@
         </div>
     </form>
 
+
     <div class="button-panel">
         <button type="button" (click)="onAddNewHotel()" class="btn btn-success">New Hotel</button>
-        <div class="hidden-button-panel" *ngIf='showHiddenButtons'>
+        <div class="hidden-button-panel" *ngIf='showHiddenButtons && showForm'>
             <button type="button" (click)="onDelete()" class="btn btn-danger">Remove Hotel</button>
         </div>
-        <button type="button" (click)="onSubmit()" [disabled]="hotelForm.invalid" class="btn btn-success">Submit Hotel</button>
+        <div class="hidden-button-panel" *ngIf='showMediaButton && showForm'>
+            <button type="button" (click)="onMedia()" class="btn btn-success">Media</button>
+        </div>
+        <button type="button" *ngIf="showForm" (click)="onSubmit()" [disabled]="hotelForm.invalid"
+            class="btn btn-success">Submit
+            Hotel</button>
         <button type="button" (click)="onGoBack()" class="btn btn-warning">Go Back</button>
     </div>
     <app-modal [modalTitle]="'Warning'" [modalText]="'Do You realy want to delete this hotel?'"
         [modalId]="'delete-hotel-modal'" [isInfoModal]="false" (okModal)="okModal($event)">
+    </app-modal>
+    <app-modal [modalTitle]="'Warning'" [modalText]="'Ad first a media pls'"
+        [modalId]="'add-media-modal'" [isInfoModal]="true">
     </app-modal>
 
 </div>

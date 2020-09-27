@@ -50,6 +50,7 @@
                             <label class="control-label" for="roomType">Room Type</label>
                             <select id="roomType" #roomType="ngModel" name="roomType" [(ngModel)]="booker.roomType"
                                 class="form-control" required>
+                                <option [ngValue]="undefined">Choose a Room type</option>
                                 <option *ngFor="let roomType of roomTypes; let i = index" [ngValue]="roomType"
                                     [selected]="i == 0">
                                     {{roomType}}

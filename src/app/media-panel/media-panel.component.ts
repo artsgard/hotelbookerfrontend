@@ -14,14 +14,13 @@ import { SimpleModalService } from '../shared/service/simple-modal.service';
   styleUrls: ['./media-panel.component.css']
 })
 export class MediaPanelComponent implements OnInit {
-
-  @Input() selectedHotel: Hotel;
-  @Output() hotelMediaBackToHotel: EventEmitter<Hotel> = new EventEmitter();
+  
+  @Input() hotelMedias: HotelMedia[];
+  @Output() hotelMediaBackToHotel: EventEmitter<HotelMedia[]> = new EventEmitter();
   @Output() backToHotelEmpty: EventEmitter<any> = new EventEmitter();
-  public medias: HotelMedia[];
   public showHiddenButtons: boolean;
+  public showForm: boolean;
   public showMedia: boolean;
-  public media: HotelMedia;
   public selectedMedia: HotelMedia;
 
 
@@ -29,31 +28,34 @@ export class MediaPanelComponent implements OnInit {
     private hotelMediaService: IHotelMediaService, private modalService: SimpleModalService, private router: Router) { }
 
   ngOnInit(): void {
-    this.medias = this.selectedHotel.hotelMedias;
-    this.selectedMedia = new HotelMedia();    
+    this.selectedMedia = new HotelMedia();
     this.showHiddenButtons = false;
-    this.modalService.registerModal("delete-Media-modal");
-  }
-
-  public onAddNewMedia(): void {
-
-  }
-
-  public onSubmit(): void {
-    this.hotelMediaBackToHotel.emit(this.selectedHotel);
-  }
-
-  public onDelete(): void {
-    this.modalService.open("delete-Media-modal")
-  }
-
-  public onGoBack(): void {
-    this.backToHotelEmpty.emit();
+    this.showForm = false;
+    this.modalService.registerModal("delete-media-modal");
   }
 
   public onMediaSelect(media: HotelMedia): void {
     this.selectedMedia = media;
     this.showHiddenButtons = true;
+    this.showForm = true;
+  }
+
+  public onAddNewMedia(): void {
+    this.selectedMedia = new HotelMedia();  
+    this.showForm = true;
+  }
+
+  public onSubmit(): void {
+    this.hotelMedias.push( this.selectedMedia);
+    this.hotelMediaBackToHotel.emit(this.hotelMedias);
+  }
+
+  public onDelete(): void {
+    this.modalService.open("delete-media-modal")
+  }
+
+  public onGoBack(): void {
+    this.backToHotelEmpty.emit();
   }
 
   public okModal(id: string): void {
@@ -61,18 +63,18 @@ export class MediaPanelComponent implements OnInit {
       const delId: number = this.selectedMedia.id;
       let index: number = -1;
       
-      if (this.medias !== undefined && this.medias !== null) {
-        index = this.medias.indexOf(this.selectedMedia);
+      if (this.hotelMedias !== undefined && this.hotelMedias !== null) {
+        index = this.hotelMedias.indexOf(this.selectedMedia);
       }
 
       if (delId !== null) {
         this.hotelMediaService.deleteHotelMediaById(delId).subscribe(responce => {
           console.log("\n\nat Media-panel onDelete(): " + JSON.stringify(responce));
-          this.medias.splice(index, 1)
+          this.hotelMedias.splice(index, 1)
           this.showHiddenButtons = false;
         });
       } else {
-        this.medias.splice(index, 1);
+        this.hotelMedias.splice(index, 1);
         this.showHiddenButtons = false;
       }
     }

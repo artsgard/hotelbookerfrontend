@@ -1,11 +1,13 @@
 .container-panel {
-  margin-top: 10%;
-  margin-right: 5%;
-  margin-left: 5%;
-  padding: 10%;
+  width: 50%;
+  margin-left: 25%;
+}
+
+.date-picker-text {
+  font-size: 36px;
 }
 
 button {
-  padding: 10px;
   margin-left: 30px;
 }
+

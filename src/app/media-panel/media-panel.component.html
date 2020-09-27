@@ -12,7 +12,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let media of medias" [class.selected]="media === selectedMedia"
+
+                    <tr *ngFor="let media of hotelMedias" [class.selected]="media === selectedMedia"
                         (click)="onMediaSelect(media)">
                         <td> <span>{{media.id}}</span></td>
                         <td><span>{{media.title}}</span></td>
@@ -25,31 +26,33 @@
     </div>
 
     <form #mediaForm='ngForm' class="form-horizontal">
-        <div class="row mb-4">
-            <div class="form-group col-3">
-                <label class="control-label" for="title">Media Title</label>
-                <input id="title" #title="ngModel" [(ngModel)]="selectedMedia.title" class="form-control" name="title"
-                    required>
-                <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
-                    <div *ngIf="title.errors.required">
-                        Media title is required.
+        <div *ngIf="showForm">
+            <div class="row mb-4">
+                <div class="form-group col-3">
+                    <label class="control-label" for="title">Media Title</label>
+                    <input id="title" #title="ngModel" [(ngModel)]="selectedMedia.title" class="form-control"
+                        name="title" required>
+                    <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+                        <div *ngIf="title.errors.required">
+                            Media title is required.
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group col-3">
-                <label class="control-label" for="link">Media link</label>
-                <input id="link" #link="ngModel" [(ngModel)]="selectedMedia.link" class="form-control" name="link"
-                    required>
-                <div *ngIf="link.invalid && (link.dirty || link.touched)" class="alert alert-danger">
-                    <div *ngIf="link.errors.required">
-                        Media link is required.
+                <div class="form-group col-3">
+                    <label class="control-label" for="link">Media link</label>
+                    <input id="link" #link="ngModel" [(ngModel)]="selectedMedia.link" class="form-control" name="link"
+                        required>
+                    <div *ngIf="link.invalid && (link.dirty || link.touched)" class="alert alert-danger">
+                        <div *ngIf="link.errors.required">
+                            Media link is required.
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group col-3">
-                <label class="control-label" for="description">Media description</label>
-                <input id="description" #description="ngModel" [(ngModel)]="selectedMedia.description" class="form-control"
-                    name="description">
+                <div class="form-group col-3">
+                    <label class="control-label" for="description">selectedMedia description</label>
+                    <input id="description" #description="ngModel" [(ngModel)]="selectedMedia.description"
+                        class="form-control" name="description">
+                </div>
             </div>
         </div>
     </form>
@@ -57,10 +60,11 @@
 
     <div class="button-panel">
         <button type="button" (click)="onAddNewMedia()" class="btn btn-success">New Media</button>
-        <div class="hidden-button-panel" *ngIf='showHiddenButtons'>
+        <div class="hidden-button-panel" *ngIf='showHiddenButtons && showForm'>
             <button type="button" (click)="onDelete()" class="btn btn-danger">Remove Media</button>
         </div>
-        <button type="button" (click)="onSubmit()" class="btn btn-success">Submit Media</button>
+        <button type="button" *ngIf="showForm" (click)="onSubmit()" [disabled]="mediaForm.invalid" class="btn btn-success">Submit
+            Media</button>
         <button type="button" (click)="onGoBack()" class="btn btn-warning">Back to Hotel</button>
     </div>
     <app-modal [modalTitle]="'Warning'" [modalText]="'Do You realy want to delete this hotel?'"
