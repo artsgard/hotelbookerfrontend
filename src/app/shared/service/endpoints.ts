@@ -1,4 +1,6 @@
+// test / dev
 const urlBase = 'http://localhost:8085/'
+//const urlBase = 'http://localhost:8086/'
 
 export const endpoints = {
     clientUrl: urlBase + 'client',

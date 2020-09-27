@@ -6,3 +6,14 @@
   .date-picker-text {
     font-size: 36px;
   }
+
+  .confirm {
+    font-size: 18px;
+  }
+  li {
+    padding: 5px;
+  }
+
+  span {
+    color: blue;
+  }

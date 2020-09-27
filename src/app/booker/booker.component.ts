@@ -9,6 +9,7 @@ import { IBookerService } from '../shared/service/i.booker.service';
 import { IClientService } from '../shared/service/i.client.service';
 import { IHotelMediaService } from '../shared/service/i.hotel-media.service';
 import { IHotelService } from '../shared/service/i.hotel.service';
+import { SimpleModalService } from '../shared/service/simple-modal.service';
 
 const { imgPath } = endpoints;
 
@@ -29,20 +30,33 @@ export class BookerComponent implements OnInit {
   public hotelImg: string;
 
   constructor(private clientService: IClientService, private hotelService: IHotelService, private bookerService: IBookerService,
-    private hotelMediaService: IHotelMediaService, private router: Router) { }
+    private modalService: SimpleModalService, private router: Router) { }
 
+  ngOnInit(): void {
+    //this.roomTypes = Object.values(RoomType);
+    // filter not a number
+    this.modalService.registerModal("goto-register-modal");
+    this.getHotels();
+    this.roomTypes = ["SINGLE", "DOUBLE", "TRIPLE"];
+    this.booker = new Booker();
+    this.client = new Client();
+  }
 
   public onSubmit(hotel: Hotel) {
-    
     this.clientService.getClient().subscribe(client => {
       console.log("\n\has client " + JSON.stringify(client));
-      this.booker.hotel = hotel;
-      this.booker.client = client;
-      this.bookerService.saveBooker(this.booker).subscribe(booker => {
-        console.log("\n\nat Booker saveBooker() " + JSON.stringify(booker))
-        this.booker = booker;
-        this.router.navigate(['confirmation']);
-      });
+      if (client != null) {
+        this.booker.hotel = hotel;
+        this.booker.client = client;
+        this.bookerService.saveBooker(this.booker).subscribe(booker => {
+          //console.log("\n\nat Booker saveBooker() " + JSON.stringify(booker))
+          this.booker = booker;
+          this.router.navigate(['confirmation']);
+        });
+      } else {
+        this.modalService.open("goto-register-modal");
+      }
+
     });
   }
 
@@ -50,24 +64,7 @@ export class BookerComponent implements OnInit {
     this.router.navigate(['hotel-panel']);
   }
 
-  ngOnInit(): void {
-    //this.roomTypes = Object.values(RoomType);
-    // filter not a number
-    this.getHotels();
-    this.roomTypes = ["SINGLE", "DOUBLE", "TRIPLE"];
-    this.booker = new Booker();
-    this.client = new Client();
-  }
-
-  private getClients(): void { // not in use
-    this.clientService.getAllClients()
-      .subscribe(clients => {
-        console.log("\n\at Hotel getAllClients() " + JSON.stringify(clients))
-        this.clients = clients;
-      });
-  }
-
-  private getHotels(): void { // not in use
+  private getHotels(): void {
     this.hotelService.getAllHotels()
       .subscribe(hotels => {
         console.log("\n\nat Hotel getAllHotels() " + JSON.stringify(hotels))

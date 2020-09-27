@@ -6,6 +6,7 @@ import { IBookerService } from '../shared/service/i.booker.service';
 import { IClientService } from '../shared/service/i.client.service';
 import { IHotelMediaService } from '../shared/service/i.hotel-media.service';
 import { IHotelService } from '../shared/service/i.hotel.service';
+import { SimpleModalService } from '../shared/service/simple-modal.service';
 
 @Component({
   selector: 'app-register',
@@ -17,8 +18,8 @@ export class RegisterComponent implements OnInit {
   public client: Client;
   public storage = window.localStorage;
 
-  constructor(private clientService: IClientService, private hotelService: IHotelService, private bookerService: IBookerService,
-    private hotelMediaService: IHotelMediaService, private router: Router) { }
+  constructor(private clientService: IClientService, 
+    private modalService: SimpleModalService, private router: Router) { }
 
   ngOnInit(): void { 
     this.client = new Client();

@@ -5,9 +5,19 @@
         </div>
         <div class="col-12 date-picker-text text-center mt-5">Hotel Date Picker Confirmation</div>
     </div>
-    <div class="container-panel row">
-        <div class="col-12">
-            content
+    <div class="container-panel row mt-5">
+        <div class="col-12 confirm">
+            Your travel reservation has been processed :
+            <ul>
+                <li>At the  <span>{{booker.hotel.name}}</span></li>
+                <li>number of nights: <span>{{booker.nights}}</span></li>
+                <li>your checkin date: <span>{{booker.checkInDate | date}}</span></li>
+                <li>your checkout date: <span>{{booker.checkOutDate | date}}</span></li>
+                <li>your roomtype: <span>{{booker.roomType}}</span></li>
+                <li>breakfast included: <span>{{booker.breakfastIncluded ? 'yes' : 'no'}}</span></li>
+                <li>total: <span>{{booker.finalPrice}}</span></li>
+            </ul>
         </div>
     </div>
 </div>
+

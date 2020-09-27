@@ -7,4 +7,5 @@ export abstract class IBookerService {
     public abstract saveBooker (booker: Booker): Observable<Booker>;
     public abstract updateBooker (booker: Booker, id: number): Observable<Booker>;
     public abstract deleteBookerById (id: number): Observable<any>;
+    public abstract getCurrentBooker(): Booker;
 }

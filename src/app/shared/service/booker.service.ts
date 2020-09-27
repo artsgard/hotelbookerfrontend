@@ -12,6 +12,8 @@ const { bookerUrl } = endpoints;
 @Injectable({ providedIn: 'root' })
 export class BookerService implements IBookerService {
 
+  private booker; currentBooker;
+
   constructor(private http: HttpClient, public router: Router) { }
 
   /** GET Booker by Bookername. Will 404 if id not found */
@@ -39,6 +41,7 @@ export class BookerService implements IBookerService {
   /** POST: save a new Booker to the server */
   public saveBooker(booker: Booker): Observable<Booker> {
     return this.http.post<Booker>(bookerUrl, booker).pipe(
+      tap(data => this.currentBooker = data),
       catchError(err => {
         console.log('An Error occured when saving: ' + JSON.stringify(err));
         return of(null);
@@ -66,5 +69,9 @@ export class BookerService implements IBookerService {
         return of(null);
       })
     );
+  }
+
+  public getCurrentBooker(): Booker {
+    return this.currentBooker;
   }
 }

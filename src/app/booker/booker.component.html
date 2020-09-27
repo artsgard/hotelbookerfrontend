@@ -75,13 +75,14 @@
                         <div class="col-6">
                             <label class="control-label" for="checkInDate">Check in date</label>
                             <input id="checkInDate" matInput #datepicker1="ngModel" [matDatepicker]="checkInDate"
-                                placeholder="Choose a checkin date"
-                                [(ngModel)]="booker.checkInDate" name="datepicker1" class="form-control" required>
+                                placeholder="Choose a checkin date" [(ngModel)]="booker.checkInDate" name="datepicker1"
+                                class="form-control" required>
                             <div>
                                 <mat-datepicker-toggle matSuffix [for]="checkInDate"></mat-datepicker-toggle>
                                 <mat-datepicker #checkInDate></mat-datepicker>
                             </div>
-                            <div *ngIf="datepicker1.invalid && (datepicker1.dirty || datepicker1.touched)" class="alert alert-danger">
+                            <div *ngIf="datepicker1.invalid && (datepicker1.dirty || datepicker1.touched)"
+                                class="alert alert-danger">
                                 <div *ngIf="datepicker1.errors.required">
                                     Check in date is required.
                                 </div>
@@ -90,8 +91,8 @@
                         <div class="col-6">
                             <label class="control-label" for="checkOutDate">Check out date</label>
                             <input id="checkOutDate" matInput #datepicker2="ngModel" [matDatepicker]="checkOutDate"
-                                placeholder="Choose a checkout date"
-                                [(ngModel)]="booker.checkOutDate" name="datepicker2" class="form-control" required>
+                                placeholder="Choose a checkout date" [(ngModel)]="booker.checkOutDate"
+                                name="datepicker2" class="form-control" required>
                             <div>
                                 <mat-datepicker-toggle matSuffix [for]="checkOutDate"></mat-datepicker-toggle>
                                 <mat-datepicker #checkOutDate></mat-datepicker>
@@ -108,7 +109,8 @@
                         <div class="col-6"></div>
 
                         <div class="col-6 mt-4">
-                            <button type="button" (click)="onSubmit(hotel)" [disabled]="bookerForm.invalid" class="btn btn-success">
+                            <button type="button" (click)="onSubmit(hotel)" [disabled]="bookerForm.invalid"
+                                class="btn btn-success">
                                 Submit
                             </button>
                             <button type="button" (click)="hotelPanel()" class="btn btn-success">
@@ -120,4 +122,7 @@
             </div>
         </div>
     </div>
+    <app-modal [modalTitle]="'Info'" [modalText]="'Please first register http://localhost:4200/'" [modalId]="'goto-register-modal'"
+        [isInfoModal]="true">
+    </app-modal>
 </div>

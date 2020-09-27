@@ -6,7 +6,7 @@ export class Booker {
     checkInDate: Date;
     checkOutDate: Date;
     roomType: string;
-    breakfastIncluded: boolean;
+    breakfastIncluded: boolean = false;
     bookingDate : Date;
     nights : number;
     finalPrice : number;
