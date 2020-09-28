@@ -22,7 +22,7 @@ export class HotelPanelComponent implements OnInit {
   public showFormMode: boolean;
   public hotels: Hotel[];
   public hotelMedias: HotelMedia[];
-  public hotel: Hotel;
+  //public hotel: Hotel;
   public selectedHotel: Hotel;
 
   constructor(private clientService: IClientService, private hotelService: IHotelService, private bookerService: IBookerService,
@@ -48,7 +48,6 @@ export class HotelPanelComponent implements OnInit {
       this.showForm = true;
       this.showFormMode = true;
     }
-
   }
 
   public onAddNewHotel(): void {
@@ -80,14 +79,14 @@ export class HotelPanelComponent implements OnInit {
     } else {
       const flag: any = this.selectedHotel.id;
       this.hotelService.saveHotel(this.selectedHotel).subscribe(hotel => {
-        alert("\n\nat Hotel saveHotel() " + JSON.stringify(hotel))
+        console.log("\n\nat Hotel saveHotel() " + JSON.stringify(hotel))
         if (flag === undefined) {
           this.hotels.push(hotel);
         }
         this.hotelMedias = hotel.hotelMedias;
+        this.selectedHotel.hotelMedias = hotel.hotelMedias;
         this.selectedHotel = new Hotel();
       });
-
     }
   }
 

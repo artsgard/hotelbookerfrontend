@@ -47,6 +47,7 @@ export class MediaPanelComponent implements OnInit {
     const ind: number = this.hotelMedias.indexOf(this.selectedMedia);
     if (ind !== -1) {
       this.hotelMedias.splice(ind, 1);
+      this.hotelMedias.push(this.selectedMedia);
     }
     const flag: any = this.selectedMedia.id
     if(flag === undefined) {
