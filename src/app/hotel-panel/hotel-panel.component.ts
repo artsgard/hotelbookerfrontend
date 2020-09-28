@@ -41,11 +41,14 @@ export class HotelPanelComponent implements OnInit {
   }
 
   public onHotelSelect(hotel: Hotel): void {
-    this.selectedHotel = hotel;
-    this.showHiddenButtons = true;
-    this.showMediaButton = false;
-    this.showForm = true;
-    this.showFormMode = true;
+    if (!this.showFormMode) {
+      this.selectedHotel = hotel;
+      this.showHiddenButtons = true;
+      this.showMediaButton = false;
+      this.showForm = true;
+      this.showFormMode = true;
+    }
+
   }
 
   public onAddNewHotel(): void {
@@ -65,8 +68,10 @@ export class HotelPanelComponent implements OnInit {
   }
 
   public onMedia(): void {
-    this.hotelMedias = this.selectedHotel.hotelMedias;
-    this.showMedia = true;
+    if (this.showFormMode) {
+      this.hotelMedias = this.selectedHotel.hotelMedias;
+      this.showMedia = true;
+    }
   }
 
   public onSubmit(): void {
@@ -75,8 +80,8 @@ export class HotelPanelComponent implements OnInit {
     } else {
       const flag: any = this.selectedHotel.id;
       this.hotelService.saveHotel(this.selectedHotel).subscribe(hotel => {
-        console.log("\n\nat Hotel saveHotel() " + JSON.stringify(hotel))
-        if(flag === undefined) {
+        alert("\n\nat Hotel saveHotel() " + JSON.stringify(hotel))
+        if (flag === undefined) {
           this.hotels.push(hotel);
         }
         this.hotelMedias = hotel.hotelMedias;
