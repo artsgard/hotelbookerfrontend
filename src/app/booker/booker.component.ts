@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { mergeMap, tap } from 'rxjs/operators';
 import { RoomType } from '../shared/enum/room-type.enum';
 import { Booker } from '../shared/model/booker.model';
 import { Client } from '../shared/model/client.model';
@@ -37,31 +39,23 @@ export class BookerComponent implements OnInit {
     // filter not a number
     this.modalService.registerModal("goto-register-modal");
     this.getHotels();
+    this.client = this.clientService.getClient();
     this.roomTypes = ["SINGLE", "DOUBLE", "TRIPLE"];
     this.booker = new Booker();
-    this.client = new Client();
   }
 
   public onSubmit(hotel: Hotel) {
-    this.clientService.getClient().subscribe(client => {
-      console.log("\n\has client " + JSON.stringify(client));
-      if (client != null) {
-        this.booker.hotel = hotel;
-        this.booker.client = client;
-        this.bookerService.saveBooker(this.booker).subscribe(booker => {
-          //console.log("\n\nat Booker saveBooker() " + JSON.stringify(booker))
-          this.booker = booker;
-          this.router.navigate(['confirmation']);
-        });
-      } else {
-        this.modalService.open("goto-register-modal");
-      }
-
-    });
-  }
-
-  public hotelPanel() {
-    this.router.navigate(['hotel-panel']);
+    if (this.client != null) {
+      this.booker.hotel = hotel;
+      this.booker.client = this.client;
+      this.bookerService.saveBooker(this.booker).subscribe(booker => {
+        console.log("\n\nat Booker saveBooker() " + JSON.stringify(booker))
+        this.booker = booker;
+        this.router.navigate(['confirmation']);
+      });
+    } else {
+      this.modalService.open("goto-register-modal");
+    }
   }
 
   private getHotels(): void {
@@ -72,4 +66,7 @@ export class BookerComponent implements OnInit {
       });
   }
 
+  public hotelPanel() {
+    this.router.navigate(['hotel-panel']);
+  }
 }

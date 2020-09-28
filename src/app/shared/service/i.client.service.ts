@@ -8,5 +8,5 @@ export abstract class IClientService {
     public abstract saveClient (client: Client): Observable<Client>;
     public abstract updateClient (client: Client, id: number): Observable<Client>;
     public abstract deleteClientById (id: number): Observable<any>;
-    public abstract getClient(): Observable<Client>;
+    public abstract getClient(): Client;
 }

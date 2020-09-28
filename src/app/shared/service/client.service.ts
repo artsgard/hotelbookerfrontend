@@ -11,7 +11,9 @@ const { clientUrl } = endpoints;
 
 @Injectable({ providedIn: 'root' })
 export class ClientService implements IClientService {
+
   private currentClient: Client;
+
 
   constructor(private http: HttpClient, public router: Router) { }
 
@@ -81,7 +83,7 @@ export class ClientService implements IClientService {
     );
   }
 
-  public getClient():  Observable<Client>  {
-    return of(this.currentClient);
+  public getClient(): Client  {
+    return this.currentClient;
   }
 }
