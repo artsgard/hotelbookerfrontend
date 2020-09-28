@@ -19,6 +19,7 @@ export class HotelPanelComponent implements OnInit {
   public showMediaButton: boolean;
   public showMedia: boolean;
   public showForm: boolean;
+  public showFormMode: boolean;
   public hotels: Hotel[];
   public hotelMedias: HotelMedia[];
   public hotel: Hotel;
@@ -32,6 +33,7 @@ export class HotelPanelComponent implements OnInit {
     this.getHotels();
     this.showHiddenButtons = false;
     this.showMediaButton = false;
+    this.showFormMode = false;
     this.showMedia = false;
     this.showForm = false;
     this.modalService.registerModal("delete-hotel-modal");
@@ -43,6 +45,7 @@ export class HotelPanelComponent implements OnInit {
     this.showHiddenButtons = true;
     this.showMediaButton = false;
     this.showForm = true;
+    this.showFormMode = true;
   }
 
   public onAddNewHotel(): void {
@@ -50,6 +53,15 @@ export class HotelPanelComponent implements OnInit {
     this.showMediaButton = true;
     this.showHiddenButtons = false;
     this.showForm = true;
+    this.showFormMode = true;
+  }
+
+  public onResetForm(): void {
+    this.showMediaButton = false;
+    this.showFormMode = false;
+    this.showMedia = false;
+    this.showForm = false;
+    this.selectedHotel = new Hotel();
   }
 
   public onMedia(): void {
@@ -67,7 +79,7 @@ export class HotelPanelComponent implements OnInit {
         if(flag === undefined) {
           this.hotels.push(hotel);
         }
-        
+        this.hotelMedias = hotel.hotelMedias;
         this.selectedHotel = new Hotel();
       });
 

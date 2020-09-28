@@ -162,7 +162,8 @@
     </form>
 
     <div class="button-panel">
-        <button type="button" (click)="onAddNewHotel()" class="btn btn-success">New Hotel</button>
+        <button type="button" *ngIf='!showFormMode' (click)="onAddNewHotel()" class="btn btn-success">New Hotel</button>
+        <button type="button" *ngIf='showFormMode' (click)="onResetForm()" class="btn btn-warning">Reset Form</button>
         <div class="hidden-button-panel" *ngIf='showHiddenButtons && showForm'>
             <button type="button" (click)="onDelete()" class="btn btn-danger">Remove Hotel</button>
         </div>
