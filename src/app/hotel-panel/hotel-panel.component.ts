@@ -88,10 +88,12 @@ export class HotelPanelComponent implements OnInit {
         this.selectedHotel = new Hotel();
       });
     }
+    this.showForm = false;
+    this.showFormMode = false;
   }
 
   public onDelete(): void {
-    this.modalService.open("delete-hotel-modal")
+    this.modalService.open("delete-hotel-modal");
   }
 
   public okModal(id: string): void {
@@ -106,8 +108,9 @@ export class HotelPanelComponent implements OnInit {
         this.showHiddenButtons = false;
         this.selectedHotel = new Hotel();
       });
-
     }
+    this.showForm = false;
+    this.showFormMode = false;
   }
 
   public onGoBack(): void {
