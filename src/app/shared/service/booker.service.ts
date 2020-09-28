@@ -12,7 +12,7 @@ const { bookerUrl } = endpoints;
 @Injectable({ providedIn: 'root' })
 export class BookerService implements IBookerService {
 
-  private booker; currentBooker;
+  private currentBooker: Booker;
 
   constructor(private http: HttpClient, public router: Router) { }
 

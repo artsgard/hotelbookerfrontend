@@ -61,12 +61,16 @@ export class HotelPanelComponent implements OnInit {
     if (this.selectedHotel.hotelMedias.length === 0) {
       this.modalService.open("add-media-modal")
     } else {
+      const flag: any = this.selectedHotel.id;
       this.hotelService.saveHotel(this.selectedHotel).subscribe(hotel => {
         console.log("\n\nat Hotel saveHotel() " + JSON.stringify(hotel))
-        this.hotels.push(hotel);
+        if(flag === undefined) {
+          this.hotels.push(hotel);
+        }
+        
         this.selectedHotel = new Hotel();
       });
-  
+
     }
   }
 
@@ -86,7 +90,7 @@ export class HotelPanelComponent implements OnInit {
         this.showHiddenButtons = false;
         this.selectedHotel = new Hotel();
       });
-      
+
     }
   }
 
@@ -94,7 +98,6 @@ export class HotelPanelComponent implements OnInit {
     this.router.navigate(['booker']);
     this.selectedHotel = new Hotel();
   }
-
 
   public backToHotelFromMedia(): void {
     this.showMedia = false;

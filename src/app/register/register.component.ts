@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Client } from '../shared/model/client.model';
-import { IBookerService } from '../shared/service/i.booker.service';
 import { IClientService } from '../shared/service/i.client.service';
-import { IHotelMediaService } from '../shared/service/i.hotel-media.service';
-import { IHotelService } from '../shared/service/i.hotel.service';
 import { SimpleModalService } from '../shared/service/simple-modal.service';
 
 @Component({
@@ -37,6 +33,5 @@ export class RegisterComponent implements OnInit {
   public back() {
     alert(localStorage.getItem('client'));
   }
-
 }
 

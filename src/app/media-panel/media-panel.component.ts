@@ -22,7 +22,6 @@ export class MediaPanelComponent implements OnInit {
   public showMedia: boolean;
   public selectedMedia: HotelMedia;
 
-
   constructor(private clientService: IClientService, private hotelService: IHotelService, private bookerService: IBookerService,
     private hotelMediaService: IHotelMediaService, private modalService: SimpleModalService, private router: Router) { }
 

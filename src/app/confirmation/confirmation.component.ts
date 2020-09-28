@@ -20,5 +20,4 @@ export class ConfirmationComponent implements OnInit {
   ngOnInit(): void {
     this.booker = this.bookerService.getCurrentBooker();
   }
-
 }

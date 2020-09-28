@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { IHeaderPropService } from './i.header-prop.service';
 import { HttpHeaders } from '@angular/common/http';
 

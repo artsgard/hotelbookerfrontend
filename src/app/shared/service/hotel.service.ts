@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, tap, publishReplay, refCount } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Hotel } from '../model/hotel.model';
 import { IHotelService } from './i.hotel.service';
 import { Router } from '@angular/router';

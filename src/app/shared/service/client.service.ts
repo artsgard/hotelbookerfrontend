@@ -14,7 +14,6 @@ export class ClientService implements IClientService {
 
   private currentClient: Client;
 
-
   constructor(private http: HttpClient, public router: Router) { }
 
   /** GET Client by Clientname. Will 404 if id not found */
