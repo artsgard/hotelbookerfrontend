@@ -86,10 +86,10 @@ export class HotelPanelComponent implements OnInit {
         this.hotelMedias = hotel.hotelMedias;
         this.selectedHotel.hotelMedias = hotel.hotelMedias;
         this.selectedHotel = new Hotel();
+        this.showForm = false;
+        this.showFormMode = false;
       });
     }
-    this.showForm = false;
-    this.showFormMode = false;
   }
 
   public onDelete(): void {
