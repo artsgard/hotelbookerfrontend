@@ -77,18 +77,31 @@ export class HotelPanelComponent implements OnInit {
     if (this.selectedHotel.hotelMedias.length === 0) {
       this.modalService.open("add-media-modal")
     } else {
-      const flag: any = this.selectedHotel.id;
-      this.hotelService.saveHotel(this.selectedHotel).subscribe(hotel => {
-        console.log("\n\nat Hotel saveHotel() " + JSON.stringify(hotel))
-        if (flag === undefined) {
+
+      if(this.selectedHotel.id === undefined) {
+        this.hotelService.saveHotel(this.selectedHotel).subscribe(hotel => {
+          console.log("\n\nat Hotel saveHotel() " + JSON.stringify(hotel));
           this.hotels.push(hotel);
-        }
-        this.hotelMedias = hotel.hotelMedias;
-        this.selectedHotel.hotelMedias = hotel.hotelMedias;
-        this.selectedHotel = new Hotel();
-        this.showForm = false;
-        this.showFormMode = false;
-      });
+          this.hotelMedias = hotel.hotelMedias;
+          this.selectedHotel.hotelMedias = hotel.hotelMedias;
+          this.selectedHotel = new Hotel();
+          this.showForm = false;
+          this.showFormMode = false;
+        });
+      } else {
+        this.hotelService.updateHotel(this.selectedHotel).subscribe(hotel => {
+          console.log("\n\nat Hotel updateHotel() " + JSON.stringify(hotel));
+          //this.hotels.push(hotel);
+          
+          this.hotelMedias = hotel.hotelMedias;
+          this.selectedHotel.hotelMedias = hotel.hotelMedias;
+          this.selectedHotel = new Hotel();
+          this.showForm = false;
+          this.showFormMode = false;
+        });
+      }
+
+     
     }
   }
 

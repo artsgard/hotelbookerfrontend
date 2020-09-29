@@ -61,8 +61,8 @@ export class ClientService implements IClientService {
   }
 
   /** PUT: update the Client on the server */
-  public updateClient(client: Client, id: number): Observable<Client> {
-    const url = `${clientUrl}/${id}`;
+  public updateClient(client: Client): Observable<Client> {
+    const url = `${clientUrl}`;
     return this.http.put(url, client).pipe(
       catchError(err => {
         console.log('An Error occured when updating: ' + JSON.stringify(err));

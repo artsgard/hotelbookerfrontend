@@ -5,6 +5,6 @@ export abstract class IHotelMediaService {
     public abstract getAllHotelMedias(): Observable<HotelMedia[]>;
     public abstract getHotelMediaById(id: number): Observable<HotelMedia>;
     public abstract saveHotelMedia (hotelMedia: HotelMedia): Observable<HotelMedia>;
-    public abstract updateHotelMedia (hotelMedia: HotelMedia, id: number): Observable<HotelMedia>;
+    public abstract updateHotelMedia (hotelMedia: HotelMedia): Observable<HotelMedia>;
     public abstract deleteHotelMediaById (id: number): Observable<any>;
 }

@@ -47,8 +47,8 @@ export class HotelService implements IHotelService {
   }
 
   /** PUT: update the Hotel on the server */
-  public updateHotel(hotel: Hotel, id: number): Observable<Hotel> {
-    const url = `${hotelUrl}/${id}`;
+  public updateHotel(hotel: Hotel): Observable<Hotel> {
+    const url = `${hotelUrl}`;
     return this.http.put(url, hotel).pipe(
       catchError(err => {
         console.log('An Error occured when updating: ' + JSON.stringify(err));

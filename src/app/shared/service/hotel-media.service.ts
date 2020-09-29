@@ -47,8 +47,8 @@ export class HotelMediaService implements IHotelMediaService {
   }
 
   /** PUT: update the HotelMedia on the server */
-  public updateHotelMedia(hotelMedia: HotelMedia, id: number): Observable<HotelMedia> {
-    const url = `${hotelMediaUrl}/${id}`;
+  public updateHotelMedia(hotelMedia: HotelMedia): Observable<HotelMedia> {
+    const url = `${hotelMediaUrl}`;
     return this.http.put(url, hotelMedia).pipe(
       catchError(err => {
         console.log('An Error occured when updating: ' + JSON.stringify(err));

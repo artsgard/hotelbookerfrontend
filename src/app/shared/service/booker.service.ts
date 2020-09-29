@@ -50,8 +50,8 @@ export class BookerService implements IBookerService {
   }
 
   /** PUT: update the Booker on the server */
-  public updateBooker(booker: Booker, id: number): Observable<Booker> {
-    const url = `${bookerUrl}/${id}`;
+  public updateBooker(booker: Booker): Observable<Booker> {
+    const url = `${bookerUrl}`;
     return this.http.put(url, booker).pipe(
       catchError(err => {
         console.log('An Error occured when updating: ' + JSON.stringify(err));
