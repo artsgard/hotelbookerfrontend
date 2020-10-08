@@ -2,15 +2,9 @@
 hotelbookerfrontend is the frontend for Java's hotelbookerbackend
 
 General Info ====
-clone the Angular9 project and go to the root folder src:
-mvn clean install -Dmaven.test.skip=true
-mvn spring-boot:run
-The server runs on port 8085, and try the next url: http://localhost:8085/client
+clone the Angular9 project and go to the root folder which contains the src:
 
-There are three Spring Profiles: dev, prod and test
+  1) npm install
+  2) npm start
+  3) the server runs as usual on the 4200 port
 
-The application profile is set to test, running on an H2 database with some preloaded data
-
-The counterpart of this application is the Angular9 frontend application:
-
-hotelbookerfrontend
