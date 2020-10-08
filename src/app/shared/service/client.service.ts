@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { HttpClient, JsonpClientBackend } from '@angular/common/http';
 import { catchError, map, tap, publishReplay, refCount } from 'rxjs/operators';
 import { Client } from '../model/client.model';
 import { IClientService } from './i.client.service';
 import { Router } from '@angular/router';
 import { endpoints } from './endpoints';
+import { LiteralMapEntry } from '@angular/compiler/src/output/output_ast';
 
 const { clientUrl } = endpoints;
 
 @Injectable({ providedIn: 'root' })
 export class ClientService implements IClientService {
 
-  private currentClient: Client;
+  public currentClient: Client;
+  public clientBehaviorSubject: BehaviorSubject<Client>;
 
-  constructor(private http: HttpClient, public router: Router) { }
+  constructor(private http: HttpClient, public router: Router) { 
+    this.clientBehaviorSubject = new BehaviorSubject<Client>(this.currentClient);
+  }
 
   /** GET Client by Clientname. Will 404 if id not found */
   public getAllClients(): Observable<Client[]> {
@@ -52,7 +56,7 @@ export class ClientService implements IClientService {
   /** POST: save a new Client to the server */
   public saveClient(client: Client): Observable<Client> {
     return this.http.post<Client>(clientUrl, client).pipe(
-      tap(data => this.currentClient = data),
+      //tap(data => this.currentClientSubject.next(data)),
       catchError(err => {
         console.log('An Error occured when saving: ' + JSON.stringify(err));
         return of(null);
@@ -82,7 +86,11 @@ export class ClientService implements IClientService {
     );
   }
 
-  public getClient(): Client  {
-    return this.currentClient;
+  public setClient(client: Client): void  {
+    this.clientBehaviorSubject.next(client);
+  }
+
+  public getClient(): Observable<Client>  {
+    return this.clientBehaviorSubject;
   }
 }

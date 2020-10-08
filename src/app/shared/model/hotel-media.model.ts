@@ -6,4 +6,6 @@ export class HotelMedia {
     link: string;
     description: string;
     hotel: Hotel;
+    tempFileName: string;
+    tempDirName: string;
 }

@@ -1,0 +1,19 @@
+<div class="file-upload-panel">
+    <form class="md-form">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="input-file-upload">
+                    <button class="upload-button" [disabled]="!selectedFiles" (click)="uploadFile()">
+                        Upload
+                    </button>
+                </span>
+            </div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="input-file-upload" (change)="selectedFile($event)"
+                    aria-describedby="input-file">
+                <label class="custom-file-label" for="input-file">{{ fileName }}</label>
+            </div>
+        </div>
+        <p class="info-message">{{ message }} {{uploadInfo.fileName}}</p>
+    </form>
+</div>

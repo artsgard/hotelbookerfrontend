@@ -1,0 +1,17 @@
+.file-upload-panel {
+    background-color: cornsilk;
+    width: 100%;
+}
+
+.info-message {
+    padding-top: 20px;
+    font-size: 18px;
+}
+
+.upload-button {
+    margin-top: -5px;
+    border: 0px;
+    font-size: 16px;
+    height: 19px;
+    cursor: pointer;
+}

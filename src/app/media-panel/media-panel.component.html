@@ -54,6 +54,14 @@
                         class="form-control" name="description">
                 </div>
             </div>
+            <div *ngIf="!mediaForm.invalid" class="row mb-5">
+                <form class="md-form col-6">
+                    <app-file-upload [uploadMediaSubject]="uploadMediaSubjectEvent.asObservable()" 
+                    (uploadSubmit)="uploadSubmit($event)"
+                    (mediaSubmitButtonDeblock)="mediaSubmitButtonDeblock($event)"
+                    ></app-file-upload>               
+                </form>
+            </div>
         </div>
     </form>
 
@@ -62,7 +70,10 @@
         <div class="hidden-button-panel" *ngIf='showHiddenButtons && showForm'>
             <button type="button" (click)="onDelete()" class="btn btn-danger">Remove Media</button>
         </div>
-        <button type="button" *ngIf="showForm" (click)="onSubmit()" [disabled]="mediaForm.invalid" class="btn btn-success">Submit
+        {{mediaForm.invalid}}
+        {{!submitButtonDeBlock}}
+        <button type="button" *ngIf="showForm" (click)="onSubmit()" [disabled]="mediaForm.invalid || !submitButtonDeBlock"
+            class="btn btn-success">Submit
             Media</button>
         <button type="button" (click)="onGoBack()" class="btn btn-warning">Back to Hotel</button>
     </div>

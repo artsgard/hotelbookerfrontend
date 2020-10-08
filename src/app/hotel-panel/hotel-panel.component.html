@@ -1,4 +1,4 @@
-<app-media-panel *ngIf="showMedia" [hotelMedias]="hotelMedias" (backToHotel)="backToHotelFromMedia()">
+<app-media-panel *ngIf="showMedia" [hotelMedias]="hotelMedias" (backToHotel)="backToHotelFromMedia($event)">
 </app-media-panel>
 
 <div class="container" *ngIf="!showMedia">

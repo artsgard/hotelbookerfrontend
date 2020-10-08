@@ -25,6 +25,8 @@ import { HotelPanelComponent } from './hotel-panel/hotel-panel.component';
 import { SimpleModalService } from './shared/service/simple-modal.service';
 import { ModalComponent } from './modal/modal.component';
 import { MediaPanelComponent } from './media-panel/media-panel.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { FileUploadService } from './shared/service/file-upload.service';
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { MediaPanelComponent } from './media-panel/media-panel.component';
     HotelPanelComponent,
     ModalComponent,
     ModalComponent,
-    MediaPanelComponent
+    MediaPanelComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ import { MediaPanelComponent } from './media-panel/media-panel.component';
     { provide: IBookerService, useClass: BookerService },
     { provide: IHotelService, useClass: HotelService },
     { provide: IHotelMediaService, useClass: HotelMediaService },
+    { provide: FileUploadService },
     { provide: SimpleModalService },
   ],
   bootstrap: [AppComponent]

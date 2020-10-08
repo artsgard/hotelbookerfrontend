@@ -28,12 +28,15 @@ export class BookerComponent implements OnInit {
     private modalService: SimpleModalService, private router: Router) { }
 
   ngOnInit(): void {
+    this.clientService.getClient().subscribe(data =>{
+      this.client = data;
+    })
     this.roomTypes = Object.values(RoomType);
     const StringIsNumber = value => isNaN(Number(value)) === false;
     this.roomTypes = Object.keys(RoomType).filter(StringIsNumber).map(key => RoomType[key]);
     this.modalService.registerModal("goto-register-modal");
     this.getHotels();
-    this.client = this.clientService.getClient();
+   
     this.booker = new Booker();
   }
 

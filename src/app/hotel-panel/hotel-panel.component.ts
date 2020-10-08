@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FileLoadInfoModel } from '../shared/model/file-load-info.model';
 import { HotelMedia } from '../shared/model/hotel-media.model';
 import { Hotel } from '../shared/model/hotel.model';
 import { IBookerService } from '../shared/service/i.booker.service';
@@ -22,7 +23,7 @@ export class HotelPanelComponent implements OnInit {
   public showFormMode: boolean;
   public hotels: Hotel[];
   public hotelMedias: HotelMedia[];
-  //public hotel: Hotel;
+  public uploadInfo: FileLoadInfoModel;
   public selectedHotel: Hotel;
 
   constructor(private clientService: IClientService, private hotelService: IHotelService, private bookerService: IBookerService,
@@ -131,7 +132,8 @@ export class HotelPanelComponent implements OnInit {
     this.selectedHotel = new Hotel();
   }
 
-  public backToHotelFromMedia(): void {
+  public backToHotelFromMedia(obj: FileLoadInfoModel): void {
+    this.uploadInfo = obj;
     this.showMedia = false;
   }
 

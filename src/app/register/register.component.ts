@@ -12,20 +12,17 @@ import { SimpleModalService } from '../shared/service/simple-modal.service';
 export class RegisterComponent implements OnInit {
 
   public client: Client;
-  public storage = window.localStorage;
 
   constructor(private clientService: IClientService,
-    private modalService: SimpleModalService, private router: Router) { }
+    private router: Router) { }
 
   ngOnInit(): void {
     this.client = new Client();
-    this.storage.setItem('client', null);
   }
 
   public onSubmit() {
-    this.storage.setItem('client', this.client.username);
     this.clientService.saveClient(this.client).subscribe(client => {
-      this.client = client;
+      this.clientService.setClient(client);
       this.router.navigate(['booker']);
     });
   }

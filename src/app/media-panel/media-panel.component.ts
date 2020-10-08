@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { FileLoadInfoModel } from '../shared/model/file-load-info.model';
 import { HotelMedia } from '../shared/model/hotel-media.model';
 import { Hotel } from '../shared/model/hotel.model';
 import { IBookerService } from '../shared/service/i.booker.service';
@@ -20,16 +22,21 @@ export class MediaPanelComponent implements OnInit {
   public showHiddenButtons: boolean;
   public showForm: boolean;
   public showMedia: boolean;
+  public submitButtonDeBlock: boolean;
   public selectedMedia: HotelMedia;
+  public uploadMediaSubjectEvent: Subject<void>;
+  public uploadInfo: FileLoadInfoModel;
 
-  constructor(private clientService: IClientService, private hotelService: IHotelService, private bookerService: IBookerService,
-    private hotelMediaService: IHotelMediaService, private modalService: SimpleModalService, private router: Router) { }
+  constructor(private hotelMediaService: IHotelMediaService, private modalService: 
+    SimpleModalService, private router: Router) { }
 
   ngOnInit(): void {
     this.selectedMedia = new HotelMedia();
     this.showHiddenButtons = false;
     this.showForm = false;
+    this.submitButtonDeBlock = false;
     this.modalService.registerModal("delete-media-modal");
+    this.uploadMediaSubjectEvent = new Subject<void>();
   }
 
   public onMediaSelect(media: HotelMedia): void {
@@ -38,12 +45,19 @@ export class MediaPanelComponent implements OnInit {
     this.showForm = true;
   }
 
+  public mediaSubmitButtonDeblock(flag): void {
+    this.submitButtonDeBlock = flag;
+  }
+
   public onAddNewMedia(): void {
     this.selectedMedia = new HotelMedia();
     this.showForm = true;
   }
 
-  public onSubmit(): void {
+  public uploadSubmit(obj: FileLoadInfoModel): void {
+    this.selectedMedia.tempFileName = obj.fileName;
+    this.selectedMedia.tempDirName = obj.tempImgDir;
+    this.uploadInfo = obj;
     const ind: number = this.hotelMedias.indexOf(this.selectedMedia);
     if (ind !== -1) {
       this.hotelMedias.splice(ind, 1);
@@ -53,7 +67,12 @@ export class MediaPanelComponent implements OnInit {
     if(flag === undefined) {
       this.hotelMedias.push(this.selectedMedia);
     }
-    this.backToHotel.emit();
+    this.backToHotel.emit(this.uploadInfo);
+  }
+
+  public onSubmit(): void {
+    this.uploadMediaSubjectEvent.next();
+    // will call uploadSubmit via upload component
   }
 
   public onDelete(): void {
